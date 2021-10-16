@@ -1,0 +1,140 @@
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	background-color: #34302d;
+}
+
+li, a {
+	color: #f5e7de;
+	font-weight: 500;
+	font-size: 16px;
+	text-decoration: none;
+}
+
+.navbar {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 30px 10%;
+	background: #bd3b3b;
+	height: 80px;
+}
+
+.navbar_logo {
+	cursor: pointer;
+	font-weight: bolder;
+	font-size: xx-large;
+	color: #ef9849;
+}
+
+.navbar_menu {
+	list-style: none;
+}
+
+.navbar_menu li {
+	display: inline-block;
+	padding: 0px 20px;
+}
+
+.navbar_menu li a {
+	transition: all 0.3s ease 0s;
+}
+
+.navbar_menu li a:hover {
+	color: #f6b98a;
+}
+
+button {
+	padding: 9px 25px;
+	background-color: #5b7a8c;
+	border: none;
+	border-radius: 7px;
+	cursor: pointer;
+	transition: all 0.3s ease 0s;
+	font-weight: bold;
+	color: #f5e7de;
+}
+
+button:hover {
+	background-color: #395c78;
+}
+
+.title_h1 {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #f5e7de;
+	font-size: xx-large;
+	font-weight: bold;
+	color: #272422;
+	padding-bottom: 2%;
+}
+
+.form-group {
+	padding: 10px 0px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.form-group input {
+	padding: 10px 10px;
+	width: 25%;
+	display: inline-block;
+	background-color: #c1a18a;
+	color: #34302d;
+	border: none;
+}
+
+.form-group input:focus {
+	outline: none;
+}
+
+.container {
+	background-color: #dabdab;
+	margin: 5% 5%;
+	padding-top: 2%;
+	padding-bottom: 2%;
+}
+
+.threads {
+	table-layout: fixed;
+	padding: 0 2%;
+	display: table;
+	width: 100%;
+	border-spacing: 0 0.5em;
+	border-collapse: separate;
+}
+
+.posts {
+	text-align: center;
+	background-color: #c1a18a;
+}
+
+.td_posts {
+	padding: 10px 10px;
+}
+
+.title_td a {
+	font-weight: bold;
+	font-size: x-large;
+	color: #913a1e;
+	word-wrap: break-word;
+   	width: 100px;
+}
+
+.author_td a {
+	color: #756558;
+	word-wrap: break-word;
+   	width: 100px;
+}
+
+.section_td a {
+	color: #272422;
+	font-weight: bold;
+	font-size: x-large;
+}

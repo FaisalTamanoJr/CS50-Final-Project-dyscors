@@ -1,0 +1,2 @@
+FLASK_APP=forum.py
+FLASK_DEBUG=True

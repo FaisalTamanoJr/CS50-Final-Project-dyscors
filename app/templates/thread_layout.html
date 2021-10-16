@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8"/>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/style.css') }}">
+		<title>Dyscors: {% block title %}{% endblock %}</title>
+	</head>
+	<body>
+		<nav class="navbar">
+			<div class="navbar_container">
+				<a class="navbar_logo" href="/">dyscors</a>
+			</div>
+			<ul class="navbar_menu nav_1">
+				<li><a href="/gaming">Gaming</a></li>
+				<li><a href="/other">Other</a></li>
+				<li><a href="/science">Science</a></li>
+				<li><a href="/technology">Technology</a></li>
+				<li><a href="/tv_film">TV & Film</a></li>
+			</ul>
+			{% if user %}
+				<ul class="navbar_menu nav_2">
+					<li class="navbar_item"><a href="/profile">{{ user.username }}</a></li>
+					<li class="navbar_item"><a href="/logout">Log Out</a></li>
+				</ul>
+			{% else %}
+				<ul class="navbar_menu nav_2">
+					<li><a href="/login">Log In</a></li>
+					<li><a href="/register">Register</a><li>
+				</ul>
+			{% endif %}
+
+		</nav>
+
+		<div class="container">
+			<div class="title_h1">{% block s_title %}{% endblock %}</div>
+			<table class="threads">
+				<tbody>
+					{% block body %}{% endblock %}
+				</tbody>
+			</table>
+		</div>
+
+	</body>
+</html>
