@@ -1,10 +1,12 @@
+# This is use for the routes and logic of the web app
+from flask import render_template, redirect, flash, url_for
 from app import app
+from app.forms import LoginForm
 from datetime import datetime
-from flask import render_template, request, redirect
 
 SECTION = ["gaming", "other", "science", "technology", "tv_film"]
 
-user = {"username": "faisal"}
+user = {}
 
 
 @app.route("/")
@@ -58,12 +60,23 @@ def register():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    return render_template("login.html", user=user)
+
+    # This is the form class from the forms.py
+    form = LoginForm()
+
+    # if the fields in the form have been validated
+    if form.validate_on_submit():
+        flash('Login requested for user {}'.format(form.username.data))
+        return redirect(url_for('index'))
+
+    # else render the html
+    return render_template("login.html", user=user, form=form)
 
 
 @app.route("/profile")
 def profile():
     return render_template("profile.html", user=user)
+
 
 @app.route("/logout")
 def logout():
@@ -84,5 +97,6 @@ def thread(section, thread_id):
 
     # Check if thread exists
     if thread_id:
-        return render_template(section + ".html", thread_id=thread_id, user=user)
+        return render_template(section + ".html", thread_id=thread_id,
+                               user=user)
     return render_template("todo.html")

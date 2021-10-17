@@ -9,27 +9,38 @@
 	<body>
 		<nav class="navbar">
 			<div class="navbar_container">
-				<a class="navbar_logo" href="/">dyscors</a>
+				<a class="navbar_logo" href="{{ url_for('index') }}">dyscors</a>
 			</div>
 			<ul class="navbar_menu nav_1">
-				<li><a href="/gaming">Gaming</a></li>
-				<li><a href="/other">Other</a></li>
-				<li><a href="/science">Science</a></li>
-				<li><a href="/technology">Technology</a></li>
-				<li><a href="/tv_film">TV & Film</a></li>
+				<li><a href="{{ url_for('sections', section="gaming") }}">Gaming</a></li>
+				<li><a href="{{ url_for('sections', section="other") }}">Other</a></li>
+				<li><a href="{{ url_for('sections', section="science") }}">Science</a></li>
+				<li><a href="{{ url_for('sections', section="technology") }}">Technology</a></li>
+				<li><a href="{{ url_for('sections', section="tv_film") }}">TV & Film</a></li>
 			</ul>
 			{% if user %}
 				<ul class="navbar_menu nav_2">
-					<li class="navbar_item"><a href="/profile">{{ user.username }}</a></li>
-					<li class="navbar_item"><a href="/logout">Log Out</a></li>
+					<li class="navbar_item"><a href="{{ url_for('profile') }}">{{ user.username }}</a></li>
+					<li class="navbar_item"><a href="{{ url_for('logout') }}">Log Out</a></li>
 				</ul>
 			{% else %}
 				<ul class="navbar_menu nav_2">
-					<li><a href="/login">Log In</a></li>
-					<li><a href="/register">Register</a><li>
+					<li><a href="{{ url_for('login') }}">Log In</a></li>
+					<li><a href="{{ url_for('register') }}">Register</a><li>
 				</ul>
 			{% endif %}
 		</nav>
+		<div class="container">
+		{% if get_flashed_messages() %}
+		<ul>
+			{% for msg in get_flashed_messages() %}
+				<div class="msg">
+					<li>{{msg}}</li>
+				</div>
+			{% endfor %}
+		</ul>
+		{% endif %}
 		{% block body %}{% endblock %}
+		</div>
 	</body>
 </html>

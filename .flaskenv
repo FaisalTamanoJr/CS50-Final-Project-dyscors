@@ -1,2 +1,2 @@
-FLASK_APP=forum.py
+FLASK_APP=dyscors.py
 FLASK_DEBUG=True

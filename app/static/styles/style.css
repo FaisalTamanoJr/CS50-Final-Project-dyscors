@@ -59,7 +59,23 @@ button {
 	color: #f5e7de;
 }
 
+
 button:hover {
+	background-color: #395c78;
+}
+
+#submit {
+	padding: 9px 25px;
+	background-color: #5b7a8c;
+	border: none;
+	border-radius: 7px;
+	cursor: pointer;
+	transition: all 0.3s ease 0s;
+	font-weight: bold;
+	color: #f5e7de;
+}
+
+#submit:hover {
 	background-color: #395c78;
 }
 
@@ -138,3 +154,31 @@ button:hover {
 	font-weight: bold;
 	font-size: x-large;
 }
+
+label {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #272422;
+	font-weight: bold;
+}
+
+.msg {
+	background: #bd3b3b;
+	color: #f5e7de;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 5px 5px;
+	margin: 0 30%;
+}
+
+.msg li {
+	list-style: none;
+}
+
+.required_field {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	}

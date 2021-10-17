@@ -4,22 +4,29 @@
 
 {% block body %}
 
-<div class="container">
 	<div class="title_h1">
 		Log in to an Account
 	</div>
 
-	<form action="/login" method="post">
+	<form action="{{ url_for('login') }}" method="post" novalidate>
+		{{ form.hidden_tag() }}
+		{{ form.username.label }}
 		<div class="form-group">
-			<input class="form-control" autocomplete="off" autofocus name="username" placeholder="Username" type="text">
+			{{ form.username(size=32, placeholder="Your Username", autocomplete="off") }}
 		</div>
+		{% for error in form.username.errors %}
+		<span class="required_field" style="color: #bd3b3b;">[{{ error }}]</span>
+		{% endfor %}
+		{{ form.password.label }}
 		<div class="form-group">
-			<input class="form-control" name="password" placeholder="Password" type="password">
+			{{ form.password(size=32, placeholder="Your Password") }}
 		</div>
+		{% for error in form.password.errors %}
+		<span class="required_field" style="color: #bd3b3b;">[{{ error }}]</span>
+		{% endfor %}
 		<div class="form-group">
-			<button class="button" type="submit">Login</button>
+			{{ form.submit() }}
 		</div>
 	</form>
-</div>
 
 {% endblock %}
