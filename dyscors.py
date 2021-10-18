@@ -1,2 +1,8 @@
-# This is the webapp
-from app import app
+from app import app, db
+from app.models import User, Post, Comment
+
+
+# You can configure the shell context here, for the flask shell command
+@app.shell_context_processor
+def make_shell_context():
+    return {'db': db, 'User': User, 'Post': Post, 'Comment': Comment}

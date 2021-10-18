@@ -18,7 +18,7 @@
 				<li><a href="{{ url_for('sections', section="technology") }}">Technology</a></li>
 				<li><a href="{{ url_for('sections', section="tv_film") }}">TV & Film</a></li>
 			</ul>
-			{% if user %}
+			{% if not user.is_anonymous %}
 				<ul class="navbar_menu nav_2">
 					<li class="navbar_item"><a href="{{ url_for('profile') }}">{{ user.username }}</a></li>
 					<li class="navbar_item"><a href="{{ url_for('logout') }}">Log Out</a></li>

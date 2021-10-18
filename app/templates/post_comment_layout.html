@@ -42,10 +42,16 @@
 				</div>
 			{% endfor %}
 		</ul>
-			<div class="title_h1">{% block s_title %}{% endblock %}</div>
-			<table class="threads">
+			<div class="post_title">{% block p_title %}{% endblock %}</div>
+
+			<table class="description">
 				<tbody>
-					{% block body %}{% endblock %}
+					{% block description %}{% endblock %}
+				</tbody>
+			</table>
+			<table class="replies">
+				<tbody>
+					{% block replies %}{% endblock %}
 				</tbody>
 			</table>
 		</div>
