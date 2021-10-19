@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}Home{% endblock %}
+
+{% block body %}
+
+<div class="title_h1">{{ user.username }}</div>
+<div class="subtitle">Account created on: {{ user.timestamp }} </div>
+
+<div class="title_h2"><div class="title_h2" id="user_posts">Posts</div>
+<a href="{{ url_for('user_comments', username=user.username) }}">|Comments</a></div>
+
+<table class="threads">
+	<tbody>
+		{% for post in posts %}
+		<tr class="posts">
+			<td class="td_posts">
+				<div class="title_td"><a href="">{{ post.title }}</a></div>
+				<div class="author_td"><a href="">Date Posted: {{ post.timestamp }}</a></div>
+				<div class="description_td"><a href="">{{ post.description }}</a></div>
+			</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+{% endblock %}

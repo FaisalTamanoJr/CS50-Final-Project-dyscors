@@ -1,2 +1,2 @@
 FLASK_APP=dyscors.py
-FLASK_DEBUG=True
+FLASK_ENV=development

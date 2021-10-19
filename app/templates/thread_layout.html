@@ -18,9 +18,9 @@
 				<li><a href="{{ url_for('sections', section="technology") }}">Technology</a></li>
 				<li><a href="{{ url_for('sections', section="tv_film") }}">TV & Film</a></li>
 			</ul>
-			{% if not user.is_anonymous %}
+			{% if not current_user.is_anonymous %}
 				<ul class="navbar_menu nav_2">
-					<li class="navbar_item"><a href="{{ url_for('profile') }}">{{ user.username }}</a></li>
+					<li class="navbar_item"><a href="{{ url_for('user', username=current_user.username) }}">{{ current_user.username }}</a></li>
 					<li class="navbar_item"><a href="{{ url_for('logout') }}">Log Out</a></li>
 				</ul>
 			{% else %}
@@ -43,11 +43,8 @@
 			{% endfor %}
 		</ul>
 			<div class="title_h1">{% block s_title %}{% endblock %}</div>
-			<table class="threads">
-				<tbody>
-					{% block body %}{% endblock %}
-				</tbody>
-			</table>
+			<div class='create'><a href="{{ url_for('create_a_post', section=section) }}">Create a Post</a></div>
+			{% block body %}{% endblock %}
 		</div>
 
 	</body>

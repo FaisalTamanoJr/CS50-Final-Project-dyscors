@@ -1,16 +1,19 @@
-{% extends "post_comment_html.html" %}
+{% extends "post_comment_layout.html" %}
 
 {% block p_title %} {{ post_title }} {% endblock %}
 
 {% block description %}
 
-	<tr class="post">
-		<td class="post_p">
-			<div class="title_p"><a href="">title</a></div>
-			<div class="author_p"><a href="">author</a></div>
-			<div class="description_p"><a href="">description</a></div>
-		</td>
-	</tr>
+	<table class="threads"> <tbody>
+			<tr class="posts">
+				<td class="post_p">
+					<div class="title_p"><a>{{ post.title }}</a></div>
+					<div class="author_p"><a href="">{{ post.author.username }}</a></div>
+					<div class="description_p"><a>{{ post.description }}</a></div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 
 {% endblock %}
 <div class="h2">
@@ -18,12 +21,18 @@
 </div>
 {% block replies %}
 
-	<tr class="replies">
-		<td class="replies_r">
-			<div class="link_r"><a href="">link</a></div>
-			<div class="author_r"><a href="">author</a></div>
-			<div class="description_r"><a href="">description</a></div>
-		</td>
-	</tr>
+	{% for comment in comments %}
+	<table class="replies">
+		<tbody>
+			<tr class="replies">
+				<td class="replies_r">
+					<div class="link_r"><a href="">comment_link</a></div>
+					<div class="author_r"><a href="">{{ comment.author.username }}</a></div>
+					<div class="description_r"><a href="">{{ comment.description }}</a></div>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+	{% endfor %}
 
 {% endblock %}

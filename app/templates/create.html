@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}Create a Post{% endblock %}
+
+{% block body %}
+
+	<div class="title_h1">
+		Create a Post
+	</div>
+
+	<form action="{{ url_for('create_a_post', section=section) }}" method="post" novalidate>
+		{{ form.hidden_tag() }}
+		{{ form.title.label }}
+		<div class="form-group">
+			{{ form.title(size=32, placeholder="Title") }}
+		</div>
+		{% for error in form.title.errors %}
+		<span class="required_field" style="color: #bd3b3b;">[{{ error }}]</span>
+		{% endfor %}
+		{{ form.description.label }}
+		<div class="form-group">
+			{{ form.description(cols=100, rows=8, placeholder="Post description") }}
+		</div>
+		{% for error in form.description.errors %}
+		<span class="required_field" style="color: #bd3b3b;">[{{ error }}]</span>
+		{% endfor %}
+		<div class="form-group">
+			{{ form.submit() }}
+		</div>
+	</form>
+
+{% endblock %}

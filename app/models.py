@@ -37,8 +37,8 @@ def loader_user(id):
 class Post(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     section = db.Column(db.String(64))
-    title = db.Column(db.String(128))
-    description = db.Column(db.String(140))
+    title = db.Column(db.String(200))
+    description = db.Column(db.String(5000))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     comments = db.relationship('Comment', backref='post', lazy='dynamic')
@@ -50,7 +50,7 @@ class Post(db.Model):
 
 class Comment(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    description = db.Column(db.String(140))
+    description = db.Column(db.String(5000))
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
     post_id = db.Column(db.Integer, db.ForeignKey('post.id'))
     parent_id = db.Column(db.Integer, db.ForeignKey('comment.id'))

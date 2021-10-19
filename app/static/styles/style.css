@@ -79,15 +79,66 @@ button:hover {
 	background-color: #395c78;
 }
 
+.text{
+	background-color: #5b7a8c;
+	width: 8%;
+	padding: 8px;
+}
+
+.text a{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.text:hover {
+	background-color: #395c78;
+}
+
 .title_h1 {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	color: #f5e7de;
 	font-size: xx-large;
 	font-weight: bold;
 	color: #272422;
 	padding-bottom: 2%;
+}
+
+.title_h2 {
+	display: flex;
+	justify-content: start;
+	align-items: center;
+	font-size: large;
+	font-weight: bold;
+	color: #6b6a65;
+	padding-left: 2%;
+}
+
+.title_h2 a{
+	display: flex;
+	justify-content: start;
+	align-items: end;
+	font-size: large;
+	font-weight: bold;
+	color: #6b6a65;
+	padding-left: 2%;
+}
+
+.subtitle {
+	display: flex;
+	justify-content: center;
+	color: #6b6a65;
+}
+
+#user_posts.title_h2{
+	color: #272422;
+	font-size: x-large;
+}
+
+#user_comments.title_h2{
+	color: #272422;
+	font-size: x-large;
 }
 
 .form-group {
@@ -108,6 +159,15 @@ button:hover {
 
 .form-group input:focus {
 	outline: none;
+}
+
+.form-group textarea {
+	padding: 10px 10px;
+	width: 25%;
+	display: inline-block;
+	background-color: #c1a18a;
+	color: #34302d;
+	border: none;
 }
 
 .container {
@@ -135,7 +195,19 @@ button:hover {
 	padding: 10px 10px;
 }
 
+.post_p {
+	padding: 10px 10px;
+}
+
 .title_td a {
+	font-weight: bold;
+	font-size: x-large;
+	color: #913a1e;
+	word-wrap: break-word;
+   	width: 100px;
+}
+
+.title_p a {
 	font-weight: bold;
 	font-size: x-large;
 	color: #913a1e;
@@ -145,6 +217,32 @@ button:hover {
 
 .author_td a {
 	color: #756558;
+	word-wrap: break-word;
+   	width: 100px;
+}
+
+.author_p a {
+	color: #756558;
+	word-wrap: break-word;
+   	width: 100px;
+}
+
+.description_td {
+	margin-top: 15px;
+}
+
+.description_p {
+	margin-top: 15px;
+}
+
+.description_p a {
+	color: #272422;
+	word-wrap: break-word;
+   	width: 100px;
+}
+
+.description_td a {
+	color: #272422;
 	word-wrap: break-word;
    	width: 100px;
 }
@@ -182,3 +280,16 @@ label {
 	justify-content: center;
 	align-items: center;
 	}
+
+.create a{
+	background-color: #5b7a8c;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 1%;
+	margin: 0 45%;
+}
+
+.create a:hover {
+	background-color: #395c78;
+}
