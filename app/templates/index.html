@@ -14,7 +14,7 @@
 				</td>
 				<td class="td_posts">
 					<div class="title_td"><a href="{{url_for('post', post_id=posts.id, section=posts.section)}}">{{ posts.title }}</a></div>
-					<div class="author_td"><a href="{{url_for('user', username=posts.author.username)}}">Posted by: {{ posts.author.username }} | Posted on: {{ posts.timestamp }}</a></div>
+					<div class="author_td"><a href="{{url_for('user', username=posts.author.username)}}">Posted by: {{ posts.author.username }} | Posted {{ moment(posts.timestamp).fromNow() }}</a></div>
 				</td>
 			</tr>
 			{% endfor %}

@@ -21,7 +21,6 @@ __pycache__
 pip-log.txt
 .coverage
 .tox
-*.mo
 .project
 .pydevproject
 venv

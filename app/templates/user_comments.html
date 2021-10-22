@@ -5,7 +5,8 @@
 {% block body %}
 
 <div class="title_h1">{{ user.username }}</div>
-<div class="subtitle">Account created on: {{ user.timestamp }} </div>
+<div class="subtitle">Account created</div>
+<div class="subtitle"> {{ moment(user.timestamp).fromNow() }} </div>
 
 <div class="title_h2"><div class="title_h2" id="user_comments">Comments</div><a href="{{ url_for('user', username=user.username) }}">|Posts</a></div>
 <table class="threads">
@@ -13,7 +14,7 @@
 		{% for comment in comments %}
 		<tr class="posts">
 			<td class="td_posts">
-				<div class="author_td"><a href="{{url_for('comment', comment_id=comment.id, post_id=comment.post.id, section=comment.post.section)}}">Date Commented: {{ comment.timestamp }}</a></div>
+				<div class="author_td"><a href="{{url_for('comment', comment_id=comment.id, post_id=comment.post.id, section=comment.post.section)}}">Commented {{ moment(comment.timestamp).fromNow() }}</a></div>
 				<div class="description_td">{{ comment.description }}</div>
 			</td>
 		</tr>
