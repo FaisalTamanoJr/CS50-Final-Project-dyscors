@@ -1,7 +1,9 @@
 import os
+from dotenv import load_dotenv
 
 # the location of the main directory
 basedir = os.path.abspath(os.path.dirname(__file__))
+load_dotenv(os.path.join(basedir, '.env'))
 
 
 # This is where the configuration variables are stored
@@ -16,8 +18,4 @@ class Config(object):
     # Do not send signal to the app whenever there is a change in the database
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
-    # 10 posts per page
-    POSTS_PER_PAGE = 3
-
-    # 10 comments per page
-    COMMENTS_PER_PAGE = 3
+    TESTING = False

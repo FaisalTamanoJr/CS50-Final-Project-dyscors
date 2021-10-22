@@ -1,5 +1,7 @@
-from app import app, db
+from app import create_app, db
 from app.models import User, Post, Comment
+
+app = create_app()
 
 
 # You can configure the shell context here, for the flask shell command

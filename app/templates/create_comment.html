@@ -4,7 +4,7 @@
 
 {% block body %}
 
-<form action="{{ url_for('create_a_comment', section=section, post_id=post.id) }}" method="post" novalidate>
+<form action="{{ url_for('main.create_a_comment', section=section, post_id=post.id) }}" method="post" novalidate>
 	{{ form.hidden_tag() }}
 	<label>Add a Comment</label>
 	<div class="form-group">

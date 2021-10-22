@@ -8,7 +8,7 @@
 			<tr class="posts">
 				<td class="post_p">
 					<div class="title_p"><a>{{ post.title }}</a></div>
-					<div class="author_p"><a href="{{ url_for('user', username=post.author.username) }}">Posted by: {{ post.author.username }} | Posted {{ moment(post.timestamp).fromNow() }}</a></div>
+					<div class="author_p"><a href="{{ url_for('main.user', username=post.author.username) }}">Posted by: {{ post.author.username }} | Posted {{ moment(post.timestamp).fromNow() }}</a></div>
 					<div class="description_p">{{ post.description }}</div>
 				</td>
 			</tr>
@@ -25,9 +25,9 @@
 {% block replies %}
 
 {% if not current_user.is_anonymous %}
-	<a href="{{ url_for('create_a_comment', section=section, post_id=post_id) }}"><button class='create'>Comment</button></a>
+	<a href="{{ url_for('main.create_a_comment', section=section, post_id=post_id) }}"><button class='create'>Comment</button></a>
 {% else %}
-	<a href="{{ url_for('login') }}"><button class='create'>Login to Comment</button></a>
+	<a href="{{ url_for('auth.login') }}"><button class='create'>Login to Comment</button></a>
 {% endif %}
 
 	<table class="threads">
@@ -35,10 +35,10 @@
 		{% for comment in comments %}
 			<tr class="comments">
 				<td class="replies_r">
-					<div class="link_r"><a href="{{ url_for('comment', post_id=comment.post_id, comment_id=comment.id, section=section)}}">{{ comment.id }}</a></div>
-					<div class="author_p"><a href="{{ url_for('user', username=comment.author.username) }}">Commented by: {{ comment.author.username }} | Commented {{ moment(comment.timestamp).fromNow() }} </a></div>
+					<div class="link_r"><a href="{{ url_for('main.comment', post_id=comment.post_id, comment_id=comment.id, section=section)}}">{{ comment.id }}</a></div>
+					<div class="author_p"><a href="{{ url_for('main.user', username=comment.author.username) }}">Commented by: {{ comment.author.username }} | Commented {{ moment(comment.timestamp).fromNow() }} </a></div>
 					{% if comment.parent %}
-					<div class="replied_to"><a href="{{ url_for('comment', post_id=comment.parent.post_id, comment_id=comment.parent.id, section=section) }}">"{{ comment.parent.description }}"</a></div>
+					<div class="replied_to"><a href="{{ url_for('main.comment', post_id=comment.parent.post_id, comment_id=comment.parent.id, section=section) }}">"{{ comment.parent.description }}"</a></div>
 					{% endif %}
 					<div class="description_p">{{ comment.description }}</div>
 				</td>

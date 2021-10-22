@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField, TextAreaField
-from wtforms.validators import DataRequired, ValidationError, EqualTo, Length
+from wtforms import StringField, PasswordField, SubmitField
+from wtforms.validators import DataRequired, ValidationError, EqualTo
 from app.models import User
 
 
@@ -24,19 +24,3 @@ class RegistrationForm(FlaskForm):
         user = User.query.filter_by(username=username.data).first()
         if user is not None:
             raise ValidationError('Username is already taken')
-
-
-# This is used for the variables of the post form
-class PostForm(FlaskForm):
-    title = StringField("Title", validators=[DataRequired()])
-    description = TextAreaField("Post Description",
-                                validators=[DataRequired(),
-                                            Length(min=0, max=5000)])
-    submit = SubmitField("Post")
-
-
-# This is used for the variables of the comment form
-class CommentForm(FlaskForm):
-    description = TextAreaField("Comment", validators=[
-                  Length(min=0, max=5000)])
-    submit = SubmitField("Comment")
