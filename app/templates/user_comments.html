@@ -13,12 +13,18 @@
 		{% for comment in comments %}
 		<tr class="posts">
 			<td class="td_posts">
-				<div class="author_td"><a href="">Date Commented: {{ comment.timestamp }}</a></div>
-				<div class="description_td"><a href="">{{ comment.description }}</a></div>
+				<div class="author_td"><a href="{{url_for('comment', comment_id=comment.id, post_id=comment.post.id, section=comment.post.section)}}">Date Commented: {{ comment.timestamp }}</a></div>
+				<div class="description_td">{{ comment.description }}</div>
 			</td>
 		</tr>
 		{% endfor %}
 	</tbody>
 </table>
+{% if prev_url %}
+<a href="{{ prev_url }}"><button class="prev_page">Newer comments</button></a>
+{% endif %}
+{% if next_url %}
+<a href="{{ next_url }}"><button class="next_page">Older comments</button></a>
+{% endif %}
 
 {% endblock %}

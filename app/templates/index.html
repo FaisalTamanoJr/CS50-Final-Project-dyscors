@@ -10,11 +10,11 @@
 			{% for posts in post %}
 			<tr class="posts">
 				<td class="td_section">
-					<div class="section_td"><a href="">{{ posts.section }}</a></div>
+					<div class="section_td"><a href="{{url_for('sections', section=posts.section)}}">{{ posts.section }}</a></div>
 				</td>
 				<td class="td_posts">
-					<div class="title_td"><a href="">{{ posts.title }}</a></div>
-					<div class="author_td"><a href="">Posted by: {{ posts.author.username }} | Posted on: {{ posts.timestamp }}</a></div>
+					<div class="title_td"><a href="{{url_for('post', post_id=posts.id, section=posts.section)}}">{{ posts.title }}</a></div>
+					<div class="author_td"><a href="{{url_for('user', username=posts.author.username)}}">Posted by: {{ posts.author.username }} | Posted on: {{ posts.timestamp }}</a></div>
 				</td>
 			</tr>
 			{% endfor %}

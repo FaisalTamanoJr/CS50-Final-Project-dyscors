@@ -5,8 +5,9 @@
 	<table class="threads"> <tbody>
 			<tr class="posts">
 				<td class="post_p">
+					<div class="link_r"><a href="">{{ comment.id }}</a></div>
 					<div class="author_p"><a href="{{ url_for('user', username=comment.author.username) }}">Commented by: {{ comment.author.username }} | Date commented: {{ comment.timestamp }} </a></div>
-					<div class="description_p"><a>{{ comment.description }}</a></div>
+					<div class="description_p">{{ comment.description }}</div>
 				</td>
 			</tr>
 		</tbody>
@@ -20,18 +21,29 @@
 {% endblock %}
 {% block replies %}
 
+{% if not current_user.is_anonymous %}
+	<a href="{{ url_for('create_a_reply', section=section, post_id=comment.post_id, comment_id=comment_id) }}"><button class='create'>Reply</button></a>
+{% else %}
+	<a href="{{ url_for('login') }}"><button class='create'>Login to Comment</button></a>
+{% endif %}
 	{% for reply in replies %}
-	<table class="replies">
+	<table class="threads">
 		<tbody>
 			<tr class="replies">
 				<td class="replies_r">
-					<div class="link_r"><a href="">{{ reply_link }}</a></div>
-					<div class="author_r"><a href="">{{ reply.author }}</a></div>
-					<div class="description_r"><a href="">{{ reply.description }}</a></div>
+					<div class="link_r"><a href="{{ url_for('comment', post_id=reply.post_id, comment_id=reply.id, section=section)}}">{{ reply.id }}</a></div>
+					<div class="author_p"><a href="{{ url_for('user', username=comment.author.username) }}">Commented by: {{ reply.author.username }} | Date commented: {{ comment.timestamp }} </a></div>
+					<div class="description_r">{{ reply.description }}</div>
 				</td>
 			</tr>
 		</tbody>
 	</table>
 	{% endfor %}
+	{% if next_url %}
+	<a href="{{ next_url }}"><button class="next_page">Newer comments</button></a>
+	{% endif %}
+	{% if prev_url %}
+	<a href="{{ prev_url }}"><button class="prev_page">Older comments</button></a>
+	{% endif %}
 
 {% endblock %}

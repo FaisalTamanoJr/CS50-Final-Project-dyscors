@@ -108,35 +108,61 @@ def login():
 @app.route("/user/<username>")
 def user(username):
 
-    # Search the name of the username entered
-    user = User.query.filter_by(username=username).first_or_404()
+    if username:
+        # Search the name of the username entered
+        user = User.query.filter_by(username=username).first_or_404()
 
-    # Mock posts
-    posts = [
-        {'title': 'Test title', 'description': 'Test post #1',
-         'timestamp': '11:30 AM'},
-        {'title': 'Test title', 'description': 'Test post #2',
-         'timestamp': 'Yesterday'}
-    ]
+        page = request.args.get('page', 1, type=int)
 
-    # Render the user's profile page
-    return render_template("user.html", user=user, posts=posts)
+        # Search for the posts created by that user
+        posts = Post.query.filter_by(author=user).order_by(
+                    Post.timestamp.desc()).paginate(page, posts_per_page,
+                                                    False)
+
+        # Navigation controls for pages
+        next_url = url_for('user', page=posts.next_num, username=username) \
+            if posts.has_next else None
+        prev_url = url_for('user', page=posts.prev_num, username=username) \
+            if posts.has_prev else None
+
+        # Render the user's profile page
+        return render_template('user.html', user=user,
+                               posts=posts.items, next_url=next_url,
+                               prev_url=prev_url)
+
+    # Tell the user that the user cannot be found
+    return render_template("404.html")
 
 
 @app.route("/user/<username>/comments")
 def user_comments(username):
 
-    # Search the name of the username entered
-    user = User.query.filter_by(username=username).first_or_404()
+    if username:
+        # Search the name of the username entered
+        user = User.query.filter_by(username=username).first_or_404()
 
-    # Mock posts
-    comments = [
-        {'description': 'Test post #1', 'timestamp': 'An hour ago'},
-        {'description': 'Test post #2', 'timestamp': 'Last year'}
-    ]
+        page = request.args.get('page', 1, type=int)
 
-    # Render the user's profile page
-    return render_template("user_comments.html", user=user, comments=comments)
+        # Search for the posts created by that user
+        comments = Comment.query.filter_by(author=user).order_by(
+                    Comment.timestamp.desc()).paginate(page, posts_per_page,
+                                                       False)
+
+        # Navigation controls for pages
+        next_url = url_for('user_comments', page=comments.next_num,
+                           username=username) \
+            if comments.has_next else None
+        prev_url = url_for('user_comments', page=comments.prev_num,
+                           username=username) \
+            if comments.has_prev else None
+
+        # Render the user's profile page
+        return render_template('user_comments.html', user=user,
+                               comments=comments.items, next_url=next_url,
+                               prev_url=prev_url)
+
+    # Tell the user that the user cannot be found
+    return render_template("404.html")
 
 
 @app.route("/logout")
@@ -230,11 +256,13 @@ def comment(post_id, comment_id, section):
                                                      False)
 
         # Navigation controls for pages
-        next_url = url_for('post', page=replies.next_num, section=section,
-                           post_id=post_id) \
+        next_url = url_for('comment', page=replies.next_num, section=section,
+                           post_id=post_id,
+                           comment_id=comment_id) \
             if replies.has_next else None
-        prev_url = url_for('post', page=replies.prev_num, section=section,
-                           post_id=post_id) \
+        prev_url = url_for('comment', page=replies.prev_num, section=section,
+                           post_id=post_id,
+                           comment_id=comment_id) \
             if replies.has_prev else None
 
         # render the html page
@@ -307,4 +335,45 @@ def create_a_comment(section, post_id):
 
     # Else, render a webpage for the user to post
     return render_template('create_comment.html', form=form, section=section,
-                           post=Post.query.filter_by(id=post_id).first_or_404())
+                           post=Post.query.filter_by(
+                               id=post_id).first_or_404())
+
+
+@app.route("/d/<section>/<int:post_id>/<int:comment_id>/create-a-reply",
+           methods=["GET", "POST"])
+@login_required
+def create_a_reply(section, post_id, comment_id):
+
+    # This is the form class from the forms.py that you will initialize
+    form = CommentForm()
+
+    # If the user has commented
+    if form.validate_on_submit():
+
+        post = Post.query.filter_by(id=post_id).first_or_404()
+        parent = Comment.query.filter_by(id=comment_id).first_or_404()
+
+        # Add the comments of the post to the database
+        comment = Comment(
+                    author=current_user,
+                    description=form.description.data,
+                    post=post,
+                    parent_id=parent.id)
+        db.session.add(comment)
+        db.session.commit()
+
+        # Notify the user that comment was submitted
+        flash('Successfully Commented')
+
+        # Send the user to the comment
+        return redirect(url_for('comment', comment=comment,
+                                section=section,
+                                post_id=post_id,
+                                comment_id=comment_id))
+
+    # Else, render a webpage for the user to post
+    return render_template('create_reply.html', form=form, section=section,
+                           post=Post.query.filter_by(
+                               id=post_id).first_or_404(),
+                           parent=Comment.query.filter_by(
+                               id=comment_id).first_or_404())

@@ -15,13 +15,19 @@
 		{% for post in posts %}
 		<tr class="posts">
 			<td class="td_posts">
-				<div class="title_td"><a href="">{{ post.title }}</a></div>
-				<div class="author_td"><a href="">Date Posted: {{ post.timestamp }}</a></div>
-				<div class="description_td"><a href="">{{ post.description }}</a></div>
+				<div class="title_td"><a href="{{url_for('post', post_id=post.id, section=post.section)}}">{{ post.title }}</a></div>
+				<div class="author_td"><a>Date Posted: {{ post.timestamp }}</a></div>
+				<div class="description_td">{{ post.description }}</div>
 			</td>
 		</tr>
 		{% endfor %}
 	</tbody>
 </table>
+{% if prev_url %}
+<a href="{{ prev_url }}"><button class="prev_page">Newer posts</button></a>
+{% endif %}
+{% if next_url %}
+<a href="{{ next_url }}"><button class="next_page">Older posts</button></a>
+{% endif %}
 
 {% endblock %}

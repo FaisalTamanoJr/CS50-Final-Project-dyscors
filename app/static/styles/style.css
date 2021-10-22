@@ -247,24 +247,18 @@ button:hover {
 
 .description_p {
 	margin-top: 15px;
-}
-
-.description_p a {
 	color: #272422;
 	word-wrap: break-word;
-   	width: 100px;
 }
 
-.description_r a {
+.description_r {
 	color: #272422;
 	word-wrap: break-word;
-   	width: 100px;
 }
 
-.description_td a {
+.description_td {
 	color: #272422;
 	word-wrap: break-word;
-   	width: 100px;
 }
 
 .section_td a {
@@ -301,13 +295,10 @@ label {
 	align-items: center;
 	}
 
-.create {
+button.create {
 	background-color: #5b7a8c;
-	display: flex;
-	justify-content: center;
-	align-items: center;
 	padding: 1%;
-	margin: 0 45%;
+	margin: 0 2%;
 }
 
 .create:hover {
@@ -363,4 +354,8 @@ label {
 
 label a{
 	color: #272422;
+}
+
+.replied_to a{
+	color: #bd3b3b;
 }

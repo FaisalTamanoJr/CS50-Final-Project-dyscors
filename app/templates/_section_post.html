@@ -1,6 +1,6 @@
 	<tr class="posts">
 		<td class="td_posts">
 			<div class="title_td"><a href="{{ url_for('post', post_id=post.id, section=post.section) }}">{{ post.title }}</a></div>
-			<div class="author_td"><a href="">Posted by: {{ post.author.username }} | Posted on: {{ post.timestamp }}</a></div>
+			<div class="author_td"><a href="{{ url_for('user', username=post.author.username)}}">Posted by: {{ post.author.username }} | Posted on: {{ post.timestamp }}</a></div>
 		</td>
 	</tr>

@@ -8,8 +8,8 @@
 			<tr class="posts">
 				<td class="post_p">
 					<div class="title_p"><a>{{ post.title }}</a></div>
-					<div class="author_p"><a href="">{{ post.author.username }}</a></div>
-					<div class="description_p"><a>{{ post.description }}</a></div>
+					<div class="author_p"><a href="{{ url_for('user', username=post.author.username) }}">Posted by: {{ post.author.username }} | Date Posted: {{ post.timestamp }}</a></div>
+					<div class="description_p">{{ post.description }}</div>
 				</td>
 			</tr>
 		</tbody>
@@ -37,7 +37,10 @@
 				<td class="replies_r">
 					<div class="link_r"><a href="{{ url_for('comment', post_id=comment.post_id, comment_id=comment.id, section=section)}}">{{ comment.id }}</a></div>
 					<div class="author_p"><a href="{{ url_for('user', username=comment.author.username) }}">Commented by: {{ comment.author.username }} | Date commented: {{ comment.timestamp }} </a></div>
-					<div class="description_p"><a href="">{{ comment.description }}</a></div>
+					{% if comment.parent %}
+					<div class="replied_to"><a href="{{ url_for('comment', post_id=comment.parent.post_id, comment_id=comment.parent.id, section=section) }}">"{{ comment.parent.description }}"</a></div>
+					{% endif %}
+					<div class="description_p">{{ comment.description }}</div>
 				</td>
 			</tr>
 		{% endfor %}
