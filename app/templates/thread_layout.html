@@ -43,8 +43,20 @@
 			{% endfor %}
 		</ul>
 			<div class="title_h1">{% block s_title %}{% endblock %}</div>
-			<div class='create'><a href="{{ url_for('create_a_post', section=section) }}">Create a Post</a></div>
+			{% if not current_user.is_anonymous %}
+				<button class='create'><a href="{{ url_for('create_a_post', section=section) }}">Create a Post</a></button>
+			{% else %}
+				<button class='create'><a href="{{ url_for('login') }}">Login to Post</a></button>
+			{% endif %}
 			{% block body %}{% endblock %}
+		</div>
+		<div class="page_buttons">
+		{% if prev_url %}
+		<a href="{{ prev_url }}"><button class="prev_page">Newer post</button></a>
+		{% endif %}
+		{% if next_url %}
+		<a href="{{ next_url }}"><button class="next_page">Older post</button></a>
+		{% endif %}
 		</div>
 
 	</body>

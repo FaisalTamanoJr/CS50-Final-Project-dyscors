@@ -30,12 +30,13 @@ class RegistrationForm(FlaskForm):
 class PostForm(FlaskForm):
     title = StringField("Title", validators=[DataRequired()])
     description = TextAreaField("Post Description",
-                                validators=[Length(min=0, max=5000)])
+                                validators=[DataRequired(),
+                                            Length(min=0, max=5000)])
     submit = SubmitField("Post")
 
 
 # This is used for the variables of the comment form
 class CommentForm(FlaskForm):
     description = TextAreaField("Comment", validators=[
-                DataRequired(), Length(min=0, max=5000)])
+                  Length(min=0, max=5000)])
     submit = SubmitField("Comment")

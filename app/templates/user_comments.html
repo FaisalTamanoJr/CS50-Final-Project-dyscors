@@ -5,6 +5,7 @@
 {% block body %}
 
 <div class="title_h1">{{ user.username }}</div>
+<div class="subtitle">Account created on: {{ user.timestamp }} </div>
 
 <div class="title_h2"><div class="title_h2" id="user_comments">Comments</div><a href="{{ url_for('user', username=user.username) }}">|Posts</a></div>
 <table class="threads">

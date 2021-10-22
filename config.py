@@ -15,3 +15,9 @@ class Config(object):
 
     # Do not send signal to the app whenever there is a change in the database
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+
+    # 10 posts per page
+    POSTS_PER_PAGE = 3
+
+    # 10 comments per page
+    COMMENTS_PER_PAGE = 3

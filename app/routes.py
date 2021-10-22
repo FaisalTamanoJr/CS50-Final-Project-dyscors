@@ -9,6 +9,8 @@ from werkzeug.urls import url_parse
 
 
 SECTION = ["gaming", "other", "science", "technology", "tv_film"]
+posts_per_page = app.config['POSTS_PER_PAGE']
+comments_per_page = app.config['COMMENTS_PER_PAGE']
 
 user = {}
 
@@ -20,31 +22,14 @@ def index():
     now = datetime.now()
     now = now.replace(microsecond=0)
 
+    post = []
+
     # Parts of the post the user can see while not opening the post
-    post = [
-            {
-                "section": "Gaming",
-                "title": "How to get better at Team Fortress 2?",
-                "author": "Nabe Gewell",
-                "date": now
-            },
-            {
-                "section": "Other",
-                "title": "Unpopular Opinion: kids should respect the elderly",
-                "author": "John Farmer Dickinson",
-                "date": now
-            },
-            {
-                "section": "Technology",
-                "title": "Rust sucks lol",
-                "author": "C_masterrace",
-                "date": now
-            },
-            {"section": "Television and Film",
-                "title": "Is Breaking Bad still worth watching in 2021?",
-                "author": "AsukaSoryu429",
-                "date": now}
-    ]
+    for section in SECTION:
+        recent_post = Post.query.filter_by(section=section).order_by(
+                      Post.timestamp.desc()).first()
+        if recent_post:
+            post.append(recent_post)
 
     # Render the index page
     return render_template("index.html", post=post)
@@ -174,8 +159,25 @@ def sections(section):
 
     # Check if section exists, if it does render that section page
     if section in SECTION:
-        return render_template(f'{section}.html', section=section)
-    return render_template("todo.html", section=section)
+        page = request.args.get('page', 1, type=int)
+
+        # Query for the posts and get number of pages
+        posts = Post.query.filter_by(section=section).order_by(
+                Post.timestamp.desc()).paginate(page, posts_per_page, False)
+
+        # Navigation controls for pages
+        next_url = url_for('sections', page=posts.next_num, section=section) \
+            if posts.has_next else None
+        prev_url = url_for('sections', page=posts.prev_num, section=section) \
+            if posts.has_prev else None
+
+        # render the html page
+        return render_template(f'{section}.html', section=section,
+                               posts=posts.items, next_url=next_url,
+                               prev_url=prev_url)
+
+    # Else render page not found
+    return render_template("404.html")
 
 
 @app.route("/d/<section>/<int:post_id>", methods=["GET", "POST"])
@@ -186,7 +188,26 @@ def post(post_id, section):
 
         # Load the post
         post = Post.query.filter_by(id=post_id).first_or_404()
-        return render_template("post.html", post=post, section=section)
+
+        # Query for the comments and get number of pages
+        page = request.args.get('page', 1, type=int)
+        comments = Comment.query.filter_by(post_id=post.id).order_by(
+                   Comment.timestamp.asc()).paginate(page, comments_per_page,
+                                                     False)
+
+        # Navigation controls for pages
+        next_url = url_for('post', page=comments.next_num, section=section,
+                           post_id=post_id) \
+            if comments.has_next else None
+        prev_url = url_for('post', page=comments.prev_num, section=section,
+                           post_id=post_id) \
+            if comments.has_prev else None
+
+        # render the html page
+        return render_template("post.html", post=post, section=section,
+                               comments=comments.items,
+                               next_url=next_url, prev_url=prev_url,
+                               post_id=post_id)
 
     # Else render "the page not found" page
     return render_template("404.html")
@@ -194,13 +215,37 @@ def post(post_id, section):
 
 @app.route("/d/<section>/<int:post_id>/<int:comment_id>",
            methods=["GET", "POST"])
-def comment(post_id, comment_id):
+def comment(post_id, comment_id, section):
 
     # Check if post exists
     if comment_id:
-        return render_template("comment.html", post_id=post_id,
-                               comment_id=comment_id)
-    return render_template("todo.html")
+
+        # Load the post
+        comment = Comment.query.filter_by(id=comment_id).first_or_404()
+
+        # Query for the comments and get number of pages
+        page = request.args.get('page', 1, type=int)
+        replies = Comment.query.filter_by(parent_id=comment.id).order_by(
+                   Comment.timestamp.asc()).paginate(page, comments_per_page,
+                                                     False)
+
+        # Navigation controls for pages
+        next_url = url_for('post', page=replies.next_num, section=section,
+                           post_id=post_id) \
+            if replies.has_next else None
+        prev_url = url_for('post', page=replies.prev_num, section=section,
+                           post_id=post_id) \
+            if replies.has_prev else None
+
+        # render the html page
+        return render_template("comment.html", section=section,
+                               replies=replies.items,
+                               next_url=next_url, prev_url=prev_url,
+                               comment_id=comment_id,
+                               comment=comment)
+
+    # Else render "the page not found" page
+    return render_template("404.html")
 
 
 @app.route("/d/<section>/create-a-post", methods=["GET", "POST"])
@@ -229,3 +274,37 @@ def create_a_post(section):
 
     # Else, render a webpage for the user to post
     return render_template('create.html', form=form, section=section)
+
+
+@app.route("/d/<section>/<int:post_id>/create-a-comment",
+           methods=["GET", "POST"])
+@login_required
+def create_a_comment(section, post_id):
+
+    # This is the form class from the forms.py that you will initialize
+    form = CommentForm()
+
+    # If the user has commented
+    if form.validate_on_submit():
+
+        post = Post.query.filter_by(id=post_id).first_or_404()
+
+        # Add the comments of the post to the database
+        comment = Comment(
+                    author=current_user,
+                    description=form.description.data,
+                    post=post)
+        db.session.add(comment)
+        db.session.commit()
+
+        # Notify the user that comment was submitted
+        flash('Successfully Commented')
+
+        # Send the user to the post
+        return redirect(url_for('post', post=post,
+                                section=section,
+                                post_id=post_id))
+
+    # Else, render a webpage for the user to post
+    return render_template('create_comment.html', form=form, section=section,
+                           post=Post.query.filter_by(id=post_id).first_or_404())

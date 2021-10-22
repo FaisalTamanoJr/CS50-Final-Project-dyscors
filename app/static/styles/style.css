@@ -10,7 +10,6 @@ body {
 
 li, a {
 	color: #f5e7de;
-	font-weight: 500;
 	font-size: 16px;
 	text-decoration: none;
 }
@@ -55,7 +54,6 @@ button {
 	border-radius: 7px;
 	cursor: pointer;
 	transition: all 0.3s ease 0s;
-	font-weight: bold;
 	color: #f5e7de;
 }
 
@@ -163,16 +161,23 @@ button:hover {
 
 .form-group textarea {
 	padding: 10px 10px;
-	width: 25%;
 	display: inline-block;
 	background-color: #c1a18a;
 	color: #34302d;
 	border: none;
 }
 
+.form-group textarea:focus {
+	outline: none;
+}
+
+.form-group textarea #post_create{
+	width: 25%;
+}
+
 .container {
 	background-color: #dabdab;
-	margin: 5% 5%;
+	margin: 2% 5%;
 	padding-top: 2%;
 	padding-bottom: 2%;
 }
@@ -197,6 +202,11 @@ button:hover {
 
 .post_p {
 	padding: 10px 10px;
+}
+
+.replies {
+	text-align: center;
+	background-color: #c1a18a;
 }
 
 .title_td a {
@@ -227,6 +237,10 @@ button:hover {
    	width: 100px;
 }
 
+#description {
+	width:80%;
+}
+
 .description_td {
 	margin-top: 15px;
 }
@@ -236,6 +250,12 @@ button:hover {
 }
 
 .description_p a {
+	color: #272422;
+	word-wrap: break-word;
+   	width: 100px;
+}
+
+.description_r a {
 	color: #272422;
 	word-wrap: break-word;
    	width: 100px;
@@ -281,7 +301,7 @@ label {
 	align-items: center;
 	}
 
-.create a{
+.create {
 	background-color: #5b7a8c;
 	display: flex;
 	justify-content: center;
@@ -290,6 +310,57 @@ label {
 	margin: 0 45%;
 }
 
-.create a:hover {
+.create:hover {
 	background-color: #395c78;
+}
+
+.h2 {
+	font-size: xx-large;
+	font-weight: bold;
+	color: #272422;
+	padding-bottom: 2%;
+	margin: 0 2%;
+}
+
+.comments {
+	text-align: center;
+	background-color: #c1a18a;
+}
+
+.replies_r {
+	padding: 10px 10px;
+}
+
+.link_r a {
+	color: #913a1e;
+	word-wrap: break-word;
+   	width: 100px;
+}
+
+.page_buttons {
+	margin: 0 5%;
+	display: flex;
+	justify-content: flex-end;
+}
+
+.prev_page {
+	background-color: #282523;
+	border-radius: 0px;
+}
+
+.prev_page:hover {
+	background-color: #bd3b3b;
+}
+
+.next_page {
+	background-color: #282523;
+	border-radius: 0px;
+}
+
+.next_page:hover {
+	background-color: #bd3b3b;
+}
+
+label a{
+	color: #272422;
 }
