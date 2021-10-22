@@ -4,8 +4,8 @@
 A simple forum made using flask.
 
 #### Features:
-* Profile pages
-* Post and Comment history
 * Posts
 * Comments
 * Comment Replies
+* Profile pages
+* Post and comment history
